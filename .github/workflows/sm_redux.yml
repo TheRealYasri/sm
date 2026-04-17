@@ -1,0 +1,37 @@
+name: Build SM Redux
+
+on:
+  push:
+    branches:
+      - sm_redux
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          repository: TheRealYasri/sm
+          ref: sm_redux
+          submodules: recursive
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsdl2-dev build-essential python3
+
+      - name: Build sm
+        run: |
+          make clean
+          make -j$(nproc)
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sm-redux-linux
+          path: |
+            sm
+            sm.ini
