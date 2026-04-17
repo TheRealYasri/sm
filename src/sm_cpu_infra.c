@@ -14,7 +14,7 @@
 void RtlRunFrameCompare(uint16 input, int run_what);
 
 enum RunMode { RM_BOTH, RM_MINE, RM_THEIRS };
-uint8 g_runmode = RM_BOTH;
+uint8 g_runmode = RM_MINE;
 
 extern int g_got_mismatch_count;
 
@@ -892,6 +892,9 @@ Snes *SnesInit(const char *filename) {
   // NormalEnemyShotAiSkipDeathAnim_CurEnemy version that preserves R18 etc.
   { uint8 t[] = { 0xA5, 0x12, 0x48, 0xA5, 0x14, 0x48, 0xA5, 0x16, 0x48, 0x22, 0xA7, 0xA6, 0xA0, 0x68, 0x85, 0x16, 0x68, 0x85, 0x14, 0x68, 0x85, 0x12, 0x6B }; PatchBytes(0xA7FF82, t, sizeof(t)); }
   { uint8 t[] = { 0x22, 0x82, 0xff, 0xa7 }; PatchBytes(0xa7b03a, t, sizeof(t)); }
+
+  // Remove MSU-1 read
+  { uint8 t[] = { 0xEA, 0xEA, 0xEA }; PatchBytes(0x80cd9d, t, sizeof(t)); }
 
   RtlUpdateSnesPatchForBugfix();
 
