@@ -698,7 +698,13 @@ void RtlRenderAudio(int16 *audio_buffer, int samples, int channels) {
 void RtlCheat(char c) {
   if (c == 'w') {
     samus_health = samus_max_health;
+    samus_missiles = samus_max_missiles;
+    samus_super_missiles = samus_max_super_missiles;
+    samus_power_bombs = samus_max_power_bombs;
     StateRecorder_RecordPatchByte(&state_recorder, 0x9C2, (uint8 *)&samus_health, 2);
+    StateRecorder_RecordPatchByte(&state_recorder, 0x9C6, (uint8 *)&samus_missiles, 2);
+    StateRecorder_RecordPatchByte(&state_recorder, 0x9CA, (uint8 *)&samus_super_missiles, 2);
+    StateRecorder_RecordPatchByte(&state_recorder, 0x9CE, (uint8 *)&samus_power_bombs, 2);
   } else if (c == 'q') {
     samus_y_pos -= 4;
     samus_y_speed = -8;
